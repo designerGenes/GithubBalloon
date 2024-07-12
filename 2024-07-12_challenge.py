@@ -1,25 +1,21 @@
 '''
-Challenge: Create a Python program that takes a string as input and returns the most frequent character along with its frequency count. In case of a tie, return all characters with the same highest frequency count. Ignore whitespace and treat uppercase and lowercase characters as the same.
+Challenge: Secret Message Decoder
+
+You have intercepted a secret message that is encoded using a simple substitution cipher. Your task is to decode the message by replacing each letter with its corresponding letter from the given substitution key.
+
+The substitution key is provided as a dictionary where keys are the encoded letters and values are the decoded letters. All other characters (such as spaces, punctuation, etc.) should remain unchanged.
+
+Decode the secret message and return the decoded message. The secret message will only contain uppercase letters, spaces, and punctuation.
+
+Example:
+Substitution key: {'H': 'A', 'I': 'B', 'S': 'C', 'P': 'D', 'Y': 'E', ' ': ' ', '!': '!'}
+Secret message: "HIP HIP HOORAY!"
+
+Decoded message: "ABCD ABC DEEDB!"
 '''
 
-def most_frequent_char(input_string):
-    input_string = input_string.lower().replace(" ", "")
-    char_frequency = {}
-    
-    for char in input_string:
-        if char.isalpha():
-            if char in char_frequency:
-                char_frequency[char] += 1
-            else:
-                char_frequency[char] = 1
-    
-    max_frequency = max(char_frequency.values())
-    most_frequent_chars = [char for char, freq in char_frequency.items() if freq == max_frequency]
-    
-    return most_frequent_chars, max_frequency
+substitution_key = {'H': 'A', 'I': 'B', 'S': 'C', 'P': 'D', 'Y': 'E', ' ': ' ', '!': '!'}
+secret_message = "HIP HIP HOORAY!"
 
-# Test the function with an example
-input_str = "Hello, World!"
-result = most_frequent_char(input_str)
-print("Most frequent character(s):", result[0])
-print("Frequency count:", result[1])
+decoded_message = ''.join([substitution_key.get(char, char) for char in secret_message])
+decoded_message
