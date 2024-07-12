@@ -1,21 +1,27 @@
 '''
-Challenge: Secret Message Decoder
-
-You have intercepted a secret message that is encoded using a simple substitution cipher. Your task is to decode the message by replacing each letter with its corresponding letter from the given substitution key.
-
-The substitution key is provided as a dictionary where keys are the encoded letters and values are the decoded letters. All other characters (such as spaces, punctuation, etc.) should remain unchanged.
-
-Decode the secret message and return the decoded message. The secret message will only contain uppercase letters, spaces, and punctuation.
-
-Example:
-Substitution key: {'H': 'A', 'I': 'B', 'S': 'C', 'P': 'D', 'Y': 'E', ' ': ' ', '!': '!'}
-Secret message: "HIP HIP HOORAY!"
-
-Decoded message: "ABCD ABC DEEDB!"
+Challenge: Write a Python function that takes in a list of integers and returns the majority element if it exists. The majority element is the element that appears more than ⌊n/2⌋ times in the list, where n is the length of the list. If there is no majority element, return None.
 '''
 
-substitution_key = {'H': 'A', 'I': 'B', 'S': 'C', 'P': 'D', 'Y': 'E', ' ': ' ', '!': '!'}
-secret_message = "HIP HIP HOORAY!"
+def find_majority_element(nums):
+    count = 0
+    candidate = None
 
-decoded_message = ''.join([substitution_key.get(char, char) for char in secret_message])
-decoded_message
+    for num in nums:
+        if count == 0:
+            candidate = num
+            count = 1
+        elif num == candidate:
+            count += 1
+        else:
+            count -= 1
+
+    count = nums.count(candidate)
+    if count > len(nums) // 2:
+        return candidate
+    else:
+        return None
+
+# Test the function
+print(find_majority_element([1, 2, 2, 3, 2, 2, 4]))  # Output: 2
+print(find_majority_element([1, 2, 3, 4, 5]))  # Output: None
+print(find_majority_element([3, 3, 4, 2, 4, 4, 2, 4, 4]))  # Output: 4
