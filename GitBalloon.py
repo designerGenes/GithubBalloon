@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import os
 from openai import OpenAI
 import datetime
@@ -98,8 +96,8 @@ def push_to_github(repo, file_path):
         repo.git.add(file_path)
 
         # Set up the author (this is important for the first commit)
-        repo.config_writer().set_value("user", "name", "GithubBalloon Bot").release()
-        repo.config_writer().set_value("user", "email", "bot@example.com").release()
+        repo.config_writer().set_value("user", "name", "Jaden Nation").release()
+        repo.config_writer().set_value("user", "email", "jnationdesignerjeans@gmail.com").release()
 
         # Commit
         repo.index.commit("Added new challenge and solution")
@@ -109,16 +107,15 @@ def push_to_github(repo, file_path):
         
         # Use the GitHub token for authentication
         with repo.git.custom_environment(GIT_SSH_COMMAND=f'ssh -i {GITHUB_TOKEN}'):
-            origin.push()
+            origin.push(force=True)
 
         print(f"Successfully pushed to {REPO_URL}")
     except Exception as e:
         print(f"An error occurred while pushing to GitHub: {str(e)}")
-        # You might want to add more specific error handling here
-        # For example, catching GitCommandError separately
 
 def main():
     repo = Repo(REPO_PATH)  # Load the existing repository
+    challenge_path = REPO_PATH + "/challenges/"
     base_date = datetime.datetime.now()
     
     challenge = get_challenge()
@@ -126,9 +123,9 @@ def main():
     print(solution)
     
     # Generate a unique filename for each challenge
-    file_date = base_date.strftime('%Y-%m-%d')
+    file_date = base_date.strftime('%Y_%m_%d_%H_%M_%S')
     filename = f"{file_date}_challenge.py"
-    file_path = os.path.join(REPO_PATH, filename)
+    file_path = os.path.join(challenge_path, filename)
     
     save_to_file(challenge, solution, file_path)
     try:
@@ -141,4 +138,5 @@ def main():
     print("All challenges have been processed and pushed to GitHub.")
 
 if __name__ == "__main__":
+    print("Starting GitBalloon...")
     main()
